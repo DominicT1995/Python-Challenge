@@ -1,17 +1,3 @@
-# create a Python script that analyzes the records to calculate each of the following values:
-
-# The total number of months included in the dataset
-
-# The net total amount of "Profit/Losses" over the entire period
-
-# The changes in "Profit/Losses" over the entire period, and then the average of those changes
-
-# The greatest increase in profits (date and amount) over the entire period
-
-# The greatest decrease in profits (date and amount) over the entire period
-
-# Total Months: 86 Total: $22564198 Average Change: $-8311.11
-# Greatest Increase in Profits: Aug-16 ($1862002) Greatest Decrease in Profits: Feb-14 ($-1825558)
 
 import os
 import csv
@@ -44,8 +30,17 @@ with open(budget_csv) as budget_file:
 
     change.pop(0)
 
+    print('Financial Analysis\n----------------------------')
     print(f'Total Months: {len(months)}')
     print(f'Total: ${sum(profits)}')
     print(f'Average Change: ${round(sum(change)/len(change), 2)}')
     print(f'Greatest Increase in Profits: {highest_month} (${max(change)})')
     print(f'Greatest Decrease in Profits: {lowest_month} (${min(change)})')
+
+text = ['Financial Analysis\n----------------------------', '\nTotal Months: ' + str(len(months)), '\nTotal: $' + str(sum(profits)), '\nAverage Change: $' + str(round(sum(change)/len(change), 2)), '\nGreatest Increase in Profits: ' + highest_month + ' ($' + str(max(change)) + ')', '\nGreatest Decrease in Profits: ' + lowest_month + ' ($' + str(min(change)) + ')']
+
+analysis_path = os.path.join("Analysis", "budget_analysis.txt")
+
+with open (analysis_path, 'w') as analysis_file:
+
+    analysis_file.writelines(text)
