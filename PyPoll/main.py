@@ -1,18 +1,3 @@
-# calculates each of the following values:
-
-# The total number of votes cast
-
-# A complete list of candidates who received votes
-
-# The percentage of votes each candidate won
-
-# The total number of votes each candidate won
-
-# The winner of the election based on popular vote
-
-# Total Votes: 369711 / Charles Casper Stockham: 23.049% (85213)
-# Diana DeGette: 73.812% (272892) / Raymon Anthony Doane: 3.139% (11606)
-# Winner: Diana DeGette
 
 import os
 import csv
@@ -57,13 +42,22 @@ with open(poll_csv) as poll_file:
 
         total_votes = total_votes + count
 
+analysis_path = os.path.join("Analysis", "election_analysis.txt")
+
+with open (analysis_path, "w") as analysis_file:
+
+    text = []
+           
     print('Election Results\n-------------------------')
+    text.append('Election Results\n-------------------------')
 
     print(f'Total Votes: {total_votes}\n-------------------------')
+    text.append('\nTotal Votes: ' + str(total_votes) + '\n-------------------------')
 
     for candidate in votes:
 
         print(f'{candidate}: {round(votes[candidate]/total_votes * 100, 3)}% ({votes[candidate]})')
+        text.append('\n' + str(candidate) + ': ' + str(round(votes[candidate]/total_votes * 100, 3)) + '% (' + str(votes[candidate]) + ')')
 
         if votes[candidate] > most_votes:
 
@@ -72,6 +66,6 @@ with open(poll_csv) as poll_file:
             winner = candidate
 
     print(f'-------------------------\nWinner: {winner}\n-------------------------')
+    text.append('\n-------------------------\nWinner: ' + winner + '\n-------------------------')
     
-
-
+    analysis_file.writelines(text)
